@@ -19,13 +19,14 @@ function numaraInversiuni(arr, stanga = 0, dreapta = arr.length - 1) {
   const arrDreapta = arr.slice(mijloc + 1, dreapta + 1);
 
   let inversiuni = 0;
-  let arrSortat = []; // vectorul sortat de la stanga la dreapta + 1
-  let i = 0, j = 0;
+  let arrSortat = []; // vectorul sortat (descrecator) de la stanga la dreapta + 1
 
+  let i = 0, j = 0;
   while (i < arrStanga.length && j < arrDreapta.length) {
-    if (arrStanga[i] < arrDreapta[j]) {
+    if (arrDreapta[j] < arrStanga[i]) { // daca un element din dreapta e mai mic decat unul din stanga
+      // avem inversiune
       arrSortat.push(arrStanga[i]);
-      inversiuni += j;
+      inversiuni += j; // numarul de valori din vectorul drept mai mici decat din vectorul stang
       i++;
     } else {
       arrSortat.push(arrDreapta[j]);
@@ -35,7 +36,7 @@ function numaraInversiuni(arr, stanga = 0, dreapta = arr.length - 1) {
 
   while (i < arrStanga.length) {
     arrSortat.push(arrStanga[i]);
-    inversiuni += j;
+    inversiuni += j; // numarul de valori din vectorul drept mai mici decat din vectorul stang
     i++;
   }
 
@@ -44,7 +45,7 @@ function numaraInversiuni(arr, stanga = 0, dreapta = arr.length - 1) {
     j++;
   }
 
-  for (let i = stanga; i <= dreapta; i++) {
+  for (let i = stanga; i <= dreapta; i++) { // ordonam (descrescator) elementele in vector
     arr[i] = arrSortat[i - stanga];
   }
 
