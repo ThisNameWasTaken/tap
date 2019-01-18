@@ -4,7 +4,8 @@
   "description": "",
   "main": "ruxac.js",
   "scripts": {
-    "parcel": "parcel"
+    "parcel": "parcel",
+    "start": "parcel index.html"
   },
   "keywords": [],
   "author": "Adrian Dinca",
