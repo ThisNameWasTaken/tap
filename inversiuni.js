@@ -1,54 +1,54 @@
-let arr = [2, 4, 1, 3, 5];
-let temp = [];
+let arr = [6, 10, 3, 2, 9, 7, 1, 4, 8, 5];
 
-function countInversions(left, right) {
-  let inversions = 0;
-
-  if (right > left) {
-    const middle = (right + left) / 2;
-
-    inversions += countInversions(left, middle);
-    inversions += countInversions(middle + 1, right);
-
-    inversions += merge(left, right);
+/**
+ * @param {number[]} arr 
+ * @param {number} stanga 
+ * @param {number} dreapta 
+ */
+function numaraInversiuni(arr, stanga = 0, dreapta = arr.length - 1) {
+  if (stanga === dreapta) {
+    return 0;
   }
 
-  return inversions;
-}
+  const mijloc = Math.floor((stanga + dreapta) / 2);
 
-function merge(left, right) {
-  const middle = (right + left) / 2;
+  const inversiuniStanga = numaraInversiuni(arr, stanga, mijloc);
+  const inversiuniDreapta = numaraInversiuni(arr, mijloc + 1, dreapta);
 
-  let inversions = 0;
+  const arrStanga = arr.slice(stanga, mijloc + 1);
+  const arrDreapta = arr.slice(mijloc + 1, dreapta + 1);
 
-  let i = left;
-  let j = middle;
-  let k = right;
+  let inversiuni = 0;
+  let arrSortat = []; // vectorul sortat de la stanga la dreapta + 1
+  let i = 0, j = 0;
 
-  while (i < middle && j < right) {
-    if (arr[i] <= arr[j]) {
-      temp[k++] = arr[i++];
+  while (i < arrStanga.length && j < arrDreapta.length) {
+    if (arrStanga[i] < arrDreapta[j]) {
+      arrSortat.push(arrStanga[i]);
+      inversiuni += j;
+      i++;
     } else {
-      temp[k++] = arr[j++];
-      inversions += (middle - i);
+      arrSortat.push(arrDreapta[j]);
+      j++;
     }
   }
 
-  while (i < mid) {
-    temp[k++] = arr[i++];
+  while (i < arrStanga.length) {
+    arrSortat.push(arrStanga[i]);
+    inversiuni += j;
+    i++;
   }
 
-  while (j < right) {
-    temp[k++] = arr[j++];
+  while (j < arrDreapta.length) {
+    arrSortat.push(arrDreapta[j]);
+    j++;
   }
 
-  for (let i = left; i < right; i++) {
-    arr[i] = temp[i];
+  for (let i = stanga; i <= dreapta; i++) {
+    arr[i] = arrSortat[i - stanga];
   }
 
-  return inversions;
+  return inversiuni + inversiuniStanga + inversiuniDreapta;
 }
 
-(() => {
-  console.log(countInversions([1, 10, 6, 4, 5]));
-})()
+console.log(numaraInversiuni(arr));
