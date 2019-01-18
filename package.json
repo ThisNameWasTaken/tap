@@ -1,0 +1,17 @@
+{
+  "name": "probleme",
+  "version": "0.0.1",
+  "description": "",
+  "main": "ruxac.js",
+  "scripts": {
+    "parcel": "parcel"
+  },
+  "keywords": [],
+  "author": "Adrian Dinca",
+  "license": "MIT",
+  "dependencies": {
+    "heap": "^0.2.6",
+    "parcel-bundler": "^1.11.0",
+    "priorityqueue": "^0.2.1"
+  }
+}
