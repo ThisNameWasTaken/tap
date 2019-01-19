@@ -1,6 +1,6 @@
 class Obiect {
-  constructor(valoare, greutate) {
-    this.valoare = valoare;
+  constructor(valueoare, greutate) {
+    this.valueoare = valueoare;
     this.greutate = greutate;
   }
 }
@@ -14,10 +14,10 @@ let obiecte = [
 (() => {
   const greutateMaxima = 50;
   let greutateCurenta = 0;
-  let valoareCurenta = 0;
+  let valueoareCurenta = 0;
 
-  // sortez obiectele dupa raportul valoare / greutate
-  obiecte.sort((a, b) => a.valoare / a.greutate - b.valoare / b.greutate);
+  // sortez obiectele dupa raportul valueoare / greutate
+  obiecte.sort((a, b) => a.valueoare / a.greutate - b.valueoare / b.greutate);
 
   // adaug obiectele pana am umplut rucsacul
   // sau pana nu mai am obiecte de adaugat
@@ -27,33 +27,37 @@ let obiecte = [
     // daca mai am loc adaug obiectul in sac 
     if (greutateCurenta + obiectCurent.greutate < greutateMaxima) {
       greutateCurenta += obiectCurent.greutate;
-      valoareCurenta += obiectCurent.valoare;
+      valueoareCurenta += obiectCurent.valueoare;
     } else {
       // altfel il tai si adaug bucata taiata in sac
       const greutateRamasa = greutateMaxima - greutateCurenta;
       const fractieObiectCurent = greutateRamasa / obiectCurent.greutate;
-      valoareCurenta += obiectCurent.valoare * fractieObiectCurent;
+      valueoareCurenta += obiectCurent.valueoare * fractieObiectCurent;
       greutateCurenta = greutateMaxima;
     }
   }
 })();
 
-knapSack(W, wt[], val[], n)
+knapSack(weight[], value[], n)
 {
   let i, w;
-  let K[n + 1][W + 1];
+  let K[n + 1][maxWeight + 1];
 
   // Build table K[][] in bottom up manner 
   for (i = 0; i <= n; i++) {
-    for (w = 0; w <= W; w++) {
-      if (i == 0 || w == 0)
+    for (w = 0; w <= maxWeight; w++) {
+      if (i == 0 || w == 0) {
         K[i][w] = 0;
-      else if (wt[i - 1] <= w)
-        K[i][w] = max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
-      else
+      } else if (weight[i - 1] <= w) { // weight of the last item is less than the current weight / capacity of the snapsack
+        K[i][w] = max(
+          value[i - 1] + K[i - 1][w - weight[i - 1]], // item inicluded
+          K[i - 1][w] // item NOT included
+        );
+      } else { // it's too heavy; do not add it
         K[i][w] = K[i - 1][w];
+      }
     }
   }
 
-  return K[n][W];
+  return K[n][maxWeight];
 } 
